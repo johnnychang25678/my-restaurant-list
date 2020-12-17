@@ -12,6 +12,8 @@ A simple CRUD web application build with `node.js`.
 - Delete: User is able to delete restaurant from the list.
 - Search: User is able to search with restaurant name or restaurant category.
 
+![image](https://github.com/johnnychang25678/my-restaurant-list/blob/master/screencapture-localhost-3000-2020-12-17-21_32_36.png)
+
 ## Quick Start
 1. Install server depenencies
 ```

@@ -65,7 +65,6 @@ app.get('/restaurants/:id', (req, res) => {
   }
   Restaurant.findById(id).lean()
     .then(restaurant => {
-      console.log(restaurant)
       res.render('show', { restaurant: restaurant })
     })
     .catch(err => console.error(err))
