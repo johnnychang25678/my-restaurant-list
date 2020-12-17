@@ -86,10 +86,14 @@ header {
   text-decoration: none;
 }
 
+.delete-form {
+  display: inline;
+}
+
 .add-item {
   position: fixed;
   bottom: 10px;
-  right: 3rem;
+  right: 1rem;
 }
 
 

@@ -33,7 +33,6 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   Restaurant.find().lean()
     .then(restaurants => {
-      console.log(restaurants)
       res.render('index', { restaurants: restaurants })
     })
     .catch(err => console.error(err))
@@ -50,7 +49,6 @@ app.get('/restaurants/new', (req, res) => {
 // @desc Add new restaurant
 // @access Public
 app.post('/restaurants', (req, res) => {
-  console.log(req.body)
   const data = req.body
   return Restaurant.create({ ...data })
     .then(() => res.redirect('/'))
@@ -62,9 +60,62 @@ app.post('/restaurants', (req, res) => {
 // @access Public
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.send('<h1>Invalid id</h1>')
+  }
   Restaurant.findById(id).lean()
-    .then(restaurant => res.render('show', { restaurant: restaurant }))
+    .then(restaurant => {
+      console.log(restaurant)
+      res.render('show', { restaurant: restaurant })
+    })
     .catch(err => console.error(err))
+})
+
+
+// @route GET /restaurants/:id/edit
+// @desc Form for editing restaurant information
+// @access Public
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.send('<h1>Invalid id</h1>')
+  }
+  Restaurant.findById(id).lean()
+    .then(restaurant => res.render('edit', { restaurant: restaurant }))
+    .catch(err => console.error(err))
+})
+
+// @route POST /restaurants/:id/edit
+// @desc Edit restaurant information
+// @access Public
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const data = req.body
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.send('<h1>Invalid id</h1>')
+  }
+  return Restaurant.findById(id)
+    .then(restaurant => {
+      restaurant = Object.assign(restaurant, data)
+      return restaurant.save()
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(err => console.error(err))
+})
+
+// @route POST /restaurants/:id/delete
+// @desc Delete restaurant
+// @access Public
+app.post('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.send('<h1>Invalid id</h1>')
+  }
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
+    .catch(err => console.error(err))
+
 })
 
 // @route GET /search?keyword
@@ -72,7 +123,7 @@ app.get('/restaurants/:id', (req, res) => {
 // @access Public
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
-  Restaurant.find().lean()
+  Restaurant.find().lean() // returns an array
     .then(restaurants => {
       restaurants = restaurants.filter(restaurant =>
         restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
@@ -81,10 +132,6 @@ app.get('/search', (req, res) => {
       res.render('index', { restaurants: restaurants, keyword: keyword })
     })
 })
-
-
-
-
 
 
 app.listen(port, () => console.log(`Listening to server on port: ${port}`))

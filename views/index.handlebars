@@ -39,13 +39,20 @@
                 </span>
               </div>
             </a>
-            <div class="group float-right mr-2 text-secondary">
-              <a href="#" class="edit">
+            {{!-- edit and delete icons --}}
+            <div class="group float-right m-1 text-secondary">
+              <a href="/restaurants/{{this._id}}/edit" class="edit">
                 <i class="fas fa-edit"></i>
               </a>
-              <a href="#" class="delete">
-                <i class="fas fa-trash-alt"></i>
-              </a>
+              <form action="/restaurants/{{this._id}}/delete" method="POST" class="delete-form"
+                id="delete-form-{{this._id}}">
+                <a href="javascript:void()" class="delete"
+                  onclick="document.querySelector('#delete-form-{{this._id}}').submit()">
+                  <i class="fas fa-trash-alt"></i>
+                </a>
+
+
+              </form>
 
             </div>
 
