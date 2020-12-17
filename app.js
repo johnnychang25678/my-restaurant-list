@@ -6,8 +6,6 @@ const Restaurant = require('./models/restaurant')
 const app = express()
 const port = 3000
 
-const deleteAlert = require('./alert')
-
 // connect to mongodb
 mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -22,11 +20,7 @@ db.once('open', () => {
 })
 
 // template engine
-app.engine('handlebars', exphbs({
-  defaultLayout: 'main', helpers: {
-    deleteAlert
-  }
-}))
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 // middlewares
