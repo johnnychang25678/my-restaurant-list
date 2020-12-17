@@ -40,20 +40,19 @@
               </div>
             </a>
             {{!-- edit and delete icons --}}
-            <div class="group float-right m-1 text-secondary">
-              <a href="/restaurants/{{this._id}}/edit" class="edit">
-                <i class="fas fa-edit"></i>
-              </a>
-              <form action="/restaurants/{{this._id}}/delete" method="POST" class="delete-form"
-                id="delete-form-{{this._id}}">
-                <a href="javascript:void()" class="delete"
-                  onclick="document.querySelector('#delete-form-{{this._id}}').submit()">
-                  <i class="fas fa-trash-alt"></i>
+            <div class="group d-flex float-right m-1 text-secondary">
+              <button class="btn btn-outline-secondary">
+                <a href="/restaurants/{{this._id}}/edit" class="edit">
+                  <i class="fas fa-edit"></i>
                 </a>
+              </button>
 
-
+              <form action="/restaurants/{{this._id}}/delete" method="POST" class="delete-form"
+                id="delete-form-{{this._id}}" onsubmit="return confirm('確定要刪除嗎？')">
+                <button type="submit" class="btn btn-outline-secondary">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
               </form>
-
             </div>
 
           </div>

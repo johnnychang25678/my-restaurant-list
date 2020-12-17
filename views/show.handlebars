@@ -3,6 +3,21 @@
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
 
+      <div class="group float-right m-1 text-secondary">
+        <button class="btn btn-outline-secondary">
+          <a href="/restaurants/{{restaurant._id}}/edit" class="edit">
+            <i class="fas fa-edit"></i>
+          </a>
+        </button>
+
+        <form action="/restaurants/{{restaurant._id}}/delete" method="POST" class="delete-form"
+          id="delete-form-{{restaurant._id}}" onsubmit="return confirm('確定要刪除嗎？')">
+          <button type="submit" class="btn btn-outline-secondary">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </form>
+      </div>
+
       <p class="mb-1">
         <span class="text-secondary">
           <i class="fas fa-utensils pr-2"></i>

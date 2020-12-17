@@ -2,6 +2,17 @@ header {
   overflow: hidden;
 }
 
+.btn {
+  padding: 1px 6px;
+  border: none;
+}
+.btn-outline-secondary:hover {
+  color: #6c757d;
+  background-color: white;
+  border: none;
+}
+
+
 .navbar .navbar-brand {
   color: #4592af;
 }
@@ -84,10 +95,16 @@ header {
 
 .edit:hover {
   text-decoration: none;
+  color: #6c757d;
 }
 
 .delete-form {
   display: inline;
+  /* margin: 0; */
+}
+
+.fa-trash-alt, .fa-edit {
+  font-size: 15px;
 }
 
 .add-item {
