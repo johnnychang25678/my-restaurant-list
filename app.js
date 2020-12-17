@@ -1,9 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
-
-const restaurantList = require('./restaurant.json')
-
+const Restaurant = require('./models/restaurant')
 
 const app = express()
 const port = 3000
@@ -28,27 +26,40 @@ app.set('view engine', 'handlebars')
 // middleware for static files
 app.use(express.static('public'))
 
-// route
+// @route GET /
+// @desc Get all reastaurants
+// @access Public
 app.get('/', (req, res) => {
-  const restaurants = restaurantList.results
-  res.render('index', { restaurants: restaurants })
+  Restaurant.find().lean()
+    .then(restaurants => res.render('index', { restaurants: restaurants }))
+    .catch(err => console.error(err))
 })
 
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword // {keyword: saba}
-  const restaurants = restaurantList.results
-    .filter(restaurant =>
-      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-    )
-  res.render('index', { restaurants: restaurants, keyword: keyword })
-})
-
+// @route GET /restaurants/:id
+// @desc Get clicked restaurant detail
+// @access Public
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
-  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === id)
-  res.render('show', { restaurant: restaurant })
+  Restaurant.findById(id).lean()
+    .then(restaurant => res.render('show', { restaurant: restaurant }))
+    .catch(err => console.error(err))
 })
+
+// app.get('/search', (req, res) => {
+//   const keyword = req.query.keyword // {keyword: saba}
+//   const restaurants = restaurantList.results
+//     .filter(restaurant =>
+//       restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+//       restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+//     )
+//   res.render('index', { restaurants: restaurants, keyword: keyword })
+// })
+
+// app.get('/restaurants/:id', (req, res) => {
+//   const id = req.params.id
+//   const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === id)
+//   res.render('show', { restaurant: restaurant })
+// })
 
 app.listen(port, () => console.log(`Listening to server on port: ${port}`))
 
