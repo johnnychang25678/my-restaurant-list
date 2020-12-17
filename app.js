@@ -31,7 +31,10 @@ app.use(express.static('public'))
 // @access Public
 app.get('/', (req, res) => {
   Restaurant.find().lean()
-    .then(restaurants => res.render('index', { restaurants: restaurants }))
+    .then(restaurants => {
+      console.log(restaurants)
+      res.render('index', { restaurants: restaurants })
+    })
     .catch(err => console.error(err))
 })
 
@@ -45,21 +48,21 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(err => console.error(err))
 })
 
-// app.get('/search', (req, res) => {
-//   const keyword = req.query.keyword // {keyword: saba}
-//   const restaurants = restaurantList.results
-//     .filter(restaurant =>
-//       restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-//       restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-//     )
-//   res.render('index', { restaurants: restaurants, keyword: keyword })
-// })
+// @route GET /search?keyword
+// @desc Get search results
+// @access Public
+app.get('/search', (req, res) => {
+  const keyword = req.query.keyword
+  Restaurant.find().lean()
+    .then(restaurants => {
+      restaurants = restaurants.filter(restaurant =>
+        restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
+        restaurant.category.toLowerCase().includes(keyword.toLowerCase())
+      )
+      res.render('index', { restaurants: restaurants, keyword: keyword })
+    })
+})
 
-// app.get('/restaurants/:id', (req, res) => {
-//   const id = req.params.id
-//   const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === id)
-//   res.render('show', { restaurant: restaurant })
-// })
 
 app.listen(port, () => console.log(`Listening to server on port: ${port}`))
 
