@@ -78,6 +78,27 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.edit, .delete {
+  color: inherit;
+}
+
+.edit:hover {
+  text-decoration: none;
+}
+
+.add-item {
+  position: fixed;
+  bottom: 10px;
+  right: 3rem;
+}
+
+
+.add-item .fa-user-plus {
+  font-size: 48px;
+  color: #4592af;
+}
+
+
 @media screen and (max-width: 992px) {
   
   .card img{
