@@ -23,7 +23,8 @@ db.once('open', () => {
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-// middleware for static files
+// middlewares
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 // @route GET /
@@ -35,6 +36,24 @@ app.get('/', (req, res) => {
       console.log(restaurants)
       res.render('index', { restaurants: restaurants })
     })
+    .catch(err => console.error(err))
+})
+
+// @route GET /restaurants/new
+// @desc Form for adding new restaurant
+// @access Public
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
+// @route POST /restaurants
+// @desc Add new restaurant
+// @access Public
+app.post('/restaurants', (req, res) => {
+  console.log(req.body)
+  const data = req.body
+  return Restaurant.create({ ...data })
+    .then(() => res.redirect('/'))
     .catch(err => console.error(err))
 })
 
@@ -62,6 +81,10 @@ app.get('/search', (req, res) => {
       res.render('index', { restaurants: restaurants, keyword: keyword })
     })
 })
+
+
+
+
 
 
 app.listen(port, () => console.log(`Listening to server on port: ${port}`))
