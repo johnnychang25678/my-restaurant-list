@@ -1,5 +1,4 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const Restaurant = require('./models/restaurant')
 
@@ -7,17 +6,7 @@ const app = express()
 const port = 3000
 
 // connect to mongodb
-mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true, useUnifiedTopology: true })
-
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error')
-})
-
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
+require('./config/mongoose')
 
 // template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
