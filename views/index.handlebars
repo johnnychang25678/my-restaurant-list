@@ -1,23 +1,35 @@
-<!-- search bar -->
-<div class="container search-bar">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
-          </div>
+<h1 class="mb-1 restaurant-show-title">My Restaurant</h1>
+<div class="container user-filter d-flex justify-content-between align-items-stretch mt-4">
+
+  {{!-- <!-- search bar --> --}}
+  <div class="search-bar">
+    <form action="/search">
+      <div class="input-group">
+        <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+          value="{{keyword}}" aria-describedby="search-button">
+        <div class="input-group-append">
+          <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
+
+  {{!-- sorting selection --}}
+  <form action="/" method="GET">
+    <select class="form-select form-select-sm" name="sorting" onchange="this.form.submit()">
+      <option selected hidden>排序</option>
+      <option value="byNameAsc">名稱 A->Z</option>
+      <option value="byNameDesc">名稱 Z->A</option>
+      <option value="byCategory">類別</option>
+      <option value="byLocation">地區</option>
+      <option value="byTimeAsc">加入時間先->後</option>
+      <option value="byTimeDesc">加入時間後->先</option>
+    </select>
+  </form>
 </div>
 
-<!-- restaurant list -->
-<div class="container mt-5">
+{{!-- <!-- restaurant list --> --}}
+<div class="container mt-4">
   <div class="row">
     <div class="col-md-12 col-12 mx-auto">
       <div class="card-columns">
@@ -31,6 +43,10 @@
 
                 <div class="restaurant-category mb-1">
                   <i class="fas fa-utensils pr-2"></i> {{this.category}}
+                </div>
+
+                <div class="restaurant-location mb-1">
+                  <i class="fas fa-utensils pr-2"></i> {{this.location}}
                 </div>
 
                 <span class="badge badge-pill badge-danger font-weight-normal">
@@ -61,6 +77,3 @@
     </div>
   </div>
 </div>
-<a href="/restaurants/new" class="add-item">
-  <i class="fas fa-user-plus"></i>
-</a>
