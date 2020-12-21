@@ -115,6 +115,12 @@ header {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.restaurant-show-title.home-title {
+  font-family: 'Caveat', cursive;
+  animation: fade-in 3s ease 0s 1;
+  font-size: 4rem;
+}
+
 .edit, .delete {
   color: inherit;
 }
@@ -154,4 +160,13 @@ header {
     height: auto;
   }
   
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
