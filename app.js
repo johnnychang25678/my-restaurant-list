@@ -1,4 +1,5 @@
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 
@@ -15,6 +16,7 @@ app.set('view engine', 'handlebars')
 
 // middlewares
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 app.use(express.static('public'))
 app.use(methodOverride('_method'))
 
