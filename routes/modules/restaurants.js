@@ -49,10 +49,10 @@ router.get('/:id/edit', (req, res) => {
     .catch(err => console.error(err))
 })
 
-// @route POST /restaurants/:id/edit
+// @route PUT /restaurants/:id
 // @desc Edit restaurant information
 // @access Public
-router.post('/:id/edit', (req, res) => {
+router.put('/:id', (req, res) => {
   const id = req.params.id
   const data = req.body
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -67,10 +67,10 @@ router.post('/:id/edit', (req, res) => {
     .catch(err => console.error(err))
 })
 
-// @route POST /restaurants/:id/delete
+// @route DELETE /restaurants/:id
 // @desc Delete restaurant
 // @access Public
-router.post('/:id/delete', (req, res) => {
+router.delete('/:id', (req, res) => {
   const id = req.params.id
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.send('<h1>Invalid id</h1>')

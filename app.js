@@ -1,5 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const methodOverride = require('method-override')
 
 const app = express()
 const routes = require('./routes/index')
@@ -15,6 +16,7 @@ app.set('view engine', 'handlebars')
 // middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
+app.use(methodOverride('_method'))
 
 // routes
 app.use(routes)
