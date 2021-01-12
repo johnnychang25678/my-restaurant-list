@@ -1,5 +1,4 @@
 const express = require('express')
-const cookieParser = require('cookie-parser')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 
@@ -11,12 +10,16 @@ const port = 3000
 require('./config/mongoose')
 
 // template engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: {
+    ifSelect: (a, b) => a === b ? 'selected' : null // for memorizing user selected input
+  }
+}))
 app.set('view engine', 'handlebars')
 
 // middlewares
 app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser())
 app.use(express.static('public'))
 app.use(methodOverride('_method'))
 

@@ -17,13 +17,12 @@
   {{!-- sorting selection --}}
   <form action="/" method="GET">
     <select class="form-select form-select-sm" name="sorting" onchange="this.form.submit()">
-      <option selected hidden>排序</option>
-      <option value="byNameAsc">名稱 A->Z</option>
-      <option value="byNameDesc">名稱 Z->A</option>
-      <option value="byCategory">類別</option>
-      <option value="byLocation">地區</option>
-      <option value="byTimeAsc">加入時間先->後</option>
-      <option value="byTimeDesc">加入時間後->先</option>
+      <option value="byNameAsc" {{ifSelect sorting 'byNameAsc' }}>名稱 A->Z</option>
+      <option value="byNameDesc" {{ifSelect sorting 'byNameDesc' }}>名稱 Z->A</option>
+      <option value="byCategory" {{ifSelect sorting 'byCategory' }}>類別</option>
+      <option value="byLocation" {{ifSelect sorting 'byLocation' }}>地區</option>
+      <option value="byTimeAsc" {{ifSelect sorting 'byTimeAsc' }}>加入時間先->後</option>
+      <option value="byTimeDesc" {{ifSelect sorting 'byTimeDesc' }}>加入時間後->先</option>
     </select>
   </form>
 </div>

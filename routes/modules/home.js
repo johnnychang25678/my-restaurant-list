@@ -7,8 +7,7 @@ const router = express.Router()
 // @desc Get all reastaurants with sorting function
 // @access Public
 router.get('/', (req, res) => {
-  const sorting = req.query.sorting || req.cookies.sort || 'byTimeDesc'
-  // Use cookie to keep user selection. Default sorting byTimeDesc
+  const sorting = req.query.sorting || 'byTimeDesc'
   const sortMethod = {
     byNameAsc: { name: 'asc' },
     byNameDesc: { name: 'desc' },
@@ -19,8 +18,7 @@ router.get('/', (req, res) => {
   }
   Restaurant.find().lean().sort(sortMethod[sorting])
     .then(restaurants => {
-      res.cookie('sort', sorting)
-      res.render('index', { restaurants: restaurants })
+      res.render('index', { restaurants: restaurants, sorting })
     })
     .catch(err => console.error(err))
 })
