@@ -15,6 +15,7 @@ A user authentication & CRUD web application build with `node.js`.
 - **Search**: User is able to search with restaurant name or restaurant category.
 - **Sort**: User is able to sort the restaurant list.
 
+![](restaurant-list-login.png)
 ![](restaurant-list-home.png)
 
 ## Quick Start
@@ -35,6 +36,7 @@ npm run dev
 http://localhost:3000
 ```
 5. Register or try with below accounts:
+
 User 1:
 ```
 email: user1@example.com
