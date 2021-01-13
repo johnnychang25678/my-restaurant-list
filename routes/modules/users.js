@@ -9,7 +9,7 @@ const passport = require('passport')
 // @access Public
 router.get('/login', (req, res) => {
   if (req.isAuthenticated()) {
-    return res.redirect('/')
+    return res.redirect('/') // prevent logged in user to acess login page
   }
   return res.render('login')
 })
@@ -48,7 +48,7 @@ router.post('/register', async (req, res) => {
     const { name, email, password, confirmPassword } = req.body
     const registerErrors = []
     if (!email || !password || !confirmPassword) {
-      registerErrors.push({ message: '信箱、密碼、確認密碼欄位必填' })
+      registerErrors.push({ message: '信箱、密碼、確認密碼欄位必填。' })
     }
     if (password !== confirmPassword) {
       registerErrors.push({ message: '密碼與確認密碼不符！' })
@@ -59,7 +59,8 @@ router.post('/register', async (req, res) => {
 
     const user = await User.findOne({ email })
     if (user) {
-      return res.render('register', { name, email, password, confirmPassword })
+      registerErrors.push({ message: '這個信箱已經註冊過了。' })
+      return res.render('register', { registerErrors, name, email, password, confirmPassword })
     } else {
       const salt = await bcrypt.genSalt(10)
       const hash = await bcrypt.hash(password, salt)
