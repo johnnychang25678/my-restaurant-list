@@ -12,7 +12,6 @@ module.exports = (app) => {
   passport.use(new LocalStrategy({ usernameField: 'email' },
     async (email, password, done) => {
       try {
-        console.log(email, 'hi')
         if (!email || !password) {
           return done(null, false, { message: '請輸入信箱及密碼。' })
         }
@@ -37,7 +36,7 @@ module.exports = (app) => {
   })
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = User.findById(id).lean()
+      const user = await User.findById(id).lean()
       done(null, user)
     } catch (err) {
       done(err)

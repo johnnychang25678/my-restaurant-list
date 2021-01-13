@@ -1,34 +1,33 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require('mongoose')
 const Restaurant = require('../../models/restaurant')
 
 // @route GET /restaurants/new
 // @desc Form for adding new restaurant
-// @access Public
+// @access Private
 router.get('/new', (req, res) => {
   res.render('new')
 })
 
 // @route POST /restaurants
 // @desc Add new restaurant
-// @access Public
+// @access Private
 router.post('/', (req, res) => {
+  const userId = req.user._id
   const data = req.body
-  return Restaurant.create({ ...data })
+  return Restaurant.create({ ...data, userId })
     .then(() => res.redirect('/'))
     .catch(err => console.error(err))
 })
 
 // @route GET /restaurants/:id
 // @desc Get clicked restaurant detail
-// @access Public
+// @access Private
 router.get('/:id', (req, res) => {
-  const id = req.params.id
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.send('<h1>Invalid id</h1>')
-  }
-  Restaurant.findById(id).lean()
+  const userId = req.user._id
+  const _id = req.params.id
+
+  Restaurant.findOne({ _id, userId }).lean()
     .then(restaurant => {
       res.render('show', { restaurant: restaurant })
     })
@@ -38,44 +37,41 @@ router.get('/:id', (req, res) => {
 
 // @route GET /restaurants/:id/edit
 // @desc Form for editing restaurant information
-// @access Public
+// @access Private
 router.get('/:id/edit', (req, res) => {
-  const id = req.params.id
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.send('<h1>Invalid id</h1>')
-  }
-  Restaurant.findById(id).lean()
+  const userId = req.user._id
+  const _id = req.params.id
+
+  Restaurant.findOne({ _id, userId }).lean()
     .then(restaurant => res.render('edit', { restaurant: restaurant }))
     .catch(err => console.error(err))
 })
 
 // @route PUT /restaurants/:id
 // @desc Edit restaurant information
-// @access Public
+// @access Private
 router.put('/:id', (req, res) => {
-  const id = req.params.id
+  const userId = req.user._id
+  const _id = req.params.id
   const data = req.body
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.send('<h1>Invalid id</h1>')
-  }
-  return Restaurant.findById(id)
+
+  return Restaurant.findOne({ _id, userId })
     .then(restaurant => {
       restaurant = Object.assign(restaurant, data)
       return restaurant.save()
     })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => res.redirect(`/restaurants/${_id}`))
     .catch(err => console.error(err))
 })
 
 // @route DELETE /restaurants/:id
 // @desc Delete restaurant
-// @access Public
+// @access Private
 router.delete('/:id', (req, res) => {
-  const id = req.params.id
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.send('<h1>Invalid id</h1>')
-  }
-  return Restaurant.findById(id)
+  const userId = req.user._id
+  const _id = req.params.id
+
+  return Restaurant.findOne({ _id, userId })
     .then(restaurant => restaurant.remove())
     .then(() => res.redirect('/'))
     .catch(err => console.error(err))

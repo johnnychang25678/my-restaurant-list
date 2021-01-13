@@ -5,8 +5,9 @@ const router = express.Router()
 
 // @route GET /
 // @desc Get all reastaurants with sorting function
-// @access Public
+// @access Private
 router.get('/', (req, res) => {
+  const userId = req.user._id
   const sorting = req.query.sorting || 'byTimeDesc'
   const sortMethod = {
     byNameAsc: { name: 'asc' },
@@ -16,7 +17,7 @@ router.get('/', (req, res) => {
     byTimeAsc: { _id: 'asc' },
     byTimeDesc: { _id: 'desc' },
   }
-  Restaurant.find().lean().sort(sortMethod[sorting])
+  Restaurant.find({ userId }).lean().sort(sortMethod[sorting])
     .then(restaurants => {
       res.render('index', { restaurants: restaurants, sorting })
     })
