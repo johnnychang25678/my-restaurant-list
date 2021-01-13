@@ -3,6 +3,7 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <form action="/users/register" method="POST">
+        {{> message}}
         <div class="form-group">
           <label for="name">姓名</label>
           <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{name}}">

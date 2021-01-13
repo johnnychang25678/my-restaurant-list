@@ -2,14 +2,16 @@
 <div class="row mb-4">
   <div class="col-md-6 m-auto">
     <div class="card card-body">
+      {{> message}}
       <form action="/users/login" method="POST">
         <div class="form-group">
           <label for="email">信箱</label>
-          <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email">
+          <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" required>
         </div>
         <div class="form-group">
           <label for="password">密碼</label>
-          <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password">
+          <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password"
+            required>
         </div>
         <button type="submit" class="btn btn-primary btn-block">登入</button>
         <a href="/auth/facebook" class="btn btn-info btn-block">Facebook 登入</a>

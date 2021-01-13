@@ -12,18 +12,22 @@ module.exports = (app) => {
   passport.use(new LocalStrategy({ usernameField: 'email' },
     async (email, password, done) => {
       try {
+        console.log(email, 'hi')
+        if (!email || !password) {
+          return done(null, false, { message: '請輸入信箱及密碼。' })
+        }
         const user = await User.findOne({ email })
         if (!user) {
-          return done(null, false, { message: 'The email is not registered!' })
+          return done(null, false, { message: '這個信箱還沒被註冊！' })
         }
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
-          return done(null, false, { message: 'Email or password is incorrect.' })
+          return done(null, false, { message: '信箱或是密碼錯誤。' })
         }
         console.log('successful login!')
         return done(null, user)
       } catch (err) {
-        done(err)
+        return done(err)
       }
     })
   )
