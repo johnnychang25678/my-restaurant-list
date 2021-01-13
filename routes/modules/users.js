@@ -19,6 +19,14 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/users/login'
 }))
 
+// @route GET /users/logout
+// @desc logout
+// @access Private
+router.get('/logout', (req, res) => {
+  req.logout()
+  res.redirect('/users/login')
+})
+
 // @route GET /users/register
 // @desc register form
 // @access Public
