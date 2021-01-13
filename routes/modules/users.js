@@ -3,13 +3,15 @@ const bcrypt = require('bcryptjs')
 const router = express.Router()
 const User = require('../../models/user')
 const passport = require('passport')
-const { pass } = require('../../config/mongoose')
 
 // @route GET /users/login
 // @desc login form
 // @access Public
 router.get('/login', (req, res) => {
-  res.render('login')
+  if (req.isAuthenticated()) {
+    return res.redirect('/')
+  }
+  return res.render('login')
 })
 
 // @route POST /users/login
@@ -57,7 +59,6 @@ router.post('/register', async (req, res) => {
 
     const user = await User.findOne({ email })
     if (user) {
-      console.log('user already exists!')
       return res.render('register', { name, email, password, confirmPassword })
     } else {
       const salt = await bcrypt.genSalt(10)
@@ -67,7 +68,6 @@ router.post('/register', async (req, res) => {
         email,
         password: hash
       })
-      console.log('user created!')
       return res.redirect('/')
     }
   } catch (err) {
