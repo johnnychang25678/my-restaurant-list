@@ -7,6 +7,11 @@ header {
   padding: 1px 6px;
   border: none;
 }
+
+.btn:hover {
+  color: white;
+}
+
 .btn-outline-secondary:hover {
   color: #6c757d;
   background-color: white;
@@ -23,14 +28,14 @@ header {
   color: #226089;
 }
 
-.navbar .btn-create {
+.navbar .btn-login {
   background-color: #4592af;
   color: white;
   padding: 0.25rem 0.75rem;
   font-weight: 300;
 }
 
-.navbar .btn-create a {
+.navbar .btn-login a {
   color: white;
   text-decoration: none;
 }
@@ -45,6 +50,20 @@ header {
   background-size: cover;
   filter: blur(3px);
 }
+
+/* new restaurant button */
+.btn-new {
+  background-color: #9b4b4b;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-weight: 300;
+}
+
+.btn-new a {
+  color: white;
+  text-decoration: none;
+}
+/* new restaurant button */
 
 
 /* search bar */
