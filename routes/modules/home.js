@@ -8,7 +8,7 @@ const router = express.Router()
 // @access Private
 router.get('/', (req, res) => {
   const userId = req.user._id
-  const sorting = req.query.sorting || 'byTimeDesc'
+  const sorting = req.query.sorting || req.cookies.sort || 'byTimeDesc'
   const sortMethod = {
     byNameAsc: { name: 'asc' },
     byNameDesc: { name: 'desc' },
@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
   }
   Restaurant.find({ userId }).lean().sort(sortMethod[sorting])
     .then(restaurants => {
+      res.cookie('sort', sorting)
       res.render('index', { restaurants: restaurants, sorting })
     })
     .catch(err => console.error(err))
