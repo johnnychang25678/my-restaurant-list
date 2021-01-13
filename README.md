@@ -1,8 +1,8 @@
 # Restaurant List
 A user authentication & CRUD web application build with `node.js`. 
-- web server: `express`
-- view engine: `handlebars`
-- database: `mongodb` with `mongoose` as ODM
+- **Web server**: `express`
+- **View engine**: `handlebars`
+- **Database**: `mongodb` with `mongoose` as ODM
 
 
 ## Features
@@ -37,13 +37,13 @@ http://localhost:3000
 ```
 5. Register or try with below accounts:
 
-User 1:
+- User 1:
 ```
 email: user1@example.com
 password: 12345678
 ```
 
-User 2:
+- User 2:
 ```
 email: user2@example.com
 password: 12345678
