@@ -2,6 +2,7 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const router = express.Router()
 const User = require('../../models/user')
+const passport = require('passport')
 
 // @route GET /users/login
 // @desc login form
@@ -9,6 +10,14 @@ const User = require('../../models/user')
 router.get('/login', (req, res) => {
   res.render('login')
 })
+
+// @route POST /users/login
+// @desc login
+// @access Public
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/users/login'
+}))
 
 // @route GET /users/register
 // @desc register form
