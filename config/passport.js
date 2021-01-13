@@ -13,9 +13,6 @@ module.exports = (app) => {
   passport.use(new LocalStrategy({ usernameField: 'email' },
     async (email, password, done) => {
       try {
-        if (!email || !password) {
-          return done(null, false, { message: '請輸入信箱及密碼。' })
-        }
         const user = await User.findOne({ email })
         if (!user) {
           return done(null, false, { message: '這個信箱還沒被註冊！' })
@@ -24,13 +21,13 @@ module.exports = (app) => {
         if (!isMatch) {
           return done(null, false, { message: '信箱或是密碼錯誤。' })
         }
-        console.log('successful login!')
         return done(null, user)
       } catch (err) {
         return done(err)
       }
     })
   )
+
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
