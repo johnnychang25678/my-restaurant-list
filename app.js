@@ -2,9 +2,11 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 
+require('dotenv').config()
+
 const app = express()
 const routes = require('./routes/index')
-const port = 3000
+const port = process.env.PORT
 
 // connect to mongodb
 require('./config/mongoose')
